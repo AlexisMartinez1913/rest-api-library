@@ -14,6 +14,7 @@ public class BookDto {
     private String title;
     private String author;
     private String category;
+    private String isbn;
     private Integer numberPages;
     private Integer copiesAvailable;
 
