@@ -49,4 +49,19 @@ public class BookServiceImpl implements IBookService {
 
         return books.stream().map((book) -> modelMapper.map(book, BookDto.class)).collect(Collectors.toList());
     }
+
+    @Override
+    public BookDto updateBook(BookDto bookDto) {
+        Book existingBook = iBookRepository.findById(bookDto.getId()).get();
+        existingBook.setTitle(bookDto.getTitle());
+        existingBook.setAuthor(bookDto.getAuthor());
+        existingBook.setCategory(bookDto.getCategory());
+        existingBook.setIsbn(bookDto.getIsbn());
+        existingBook.setNumberPages(bookDto.getNumberPages());
+        existingBook.setCopiesAvailable(bookDto.getCopiesAvailable());
+
+        Book updateBook = iBookRepository.save(existingBook);
+
+        return modelMapper.map(updateBook, BookDto.class);
+    }
 }

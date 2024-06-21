@@ -8,5 +8,6 @@ public interface IBookService {
     BookDto createBook(BookDto bookDto);
     BookDto getBookById(Long bookId);
     List<BookDto> getAllBooks();
+    BookDto updateBook(BookDto bookDto);
 
 }

@@ -38,4 +38,12 @@ public class BookController {
         return new ResponseEntity<>(booksDto, HttpStatus.OK);
     }
 
+    //build update book
+    @PutMapping("{id}")
+    public ResponseEntity<BookDto> updateBook(@PathVariable("id") Long bookId, @RequestBody BookDto bookDto) {
+        bookDto.setId(bookId);
+        BookDto updatedBook = iBookService.updateBook(bookDto);
+        return new ResponseEntity<>(updatedBook, HttpStatus.OK);
+    }
+
 }
