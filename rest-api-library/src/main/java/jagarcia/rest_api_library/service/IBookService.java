@@ -9,5 +9,6 @@ public interface IBookService {
     BookDto getBookById(Long bookId);
     List<BookDto> getAllBooks();
     BookDto updateBook(BookDto bookDto);
+    void deleteBook(Long bookId);
 
 }

@@ -64,4 +64,9 @@ public class BookServiceImpl implements IBookService {
 
         return modelMapper.map(updateBook, BookDto.class);
     }
+
+    @Override
+    public void deleteBook(Long bookId) {
+        iBookRepository.deleteById(bookId);
+    }
 }

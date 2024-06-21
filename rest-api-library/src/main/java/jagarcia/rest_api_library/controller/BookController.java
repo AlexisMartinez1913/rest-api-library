@@ -46,4 +46,11 @@ public class BookController {
         return new ResponseEntity<>(updatedBook, HttpStatus.OK);
     }
 
+    //build Delete BOOK
+    @DeleteMapping
+    public ResponseEntity<String> deleteBook(@PathVariable("id") Long bookId) {
+        iBookService.deleteBook(bookId);
+        return new ResponseEntity<>("Book succesfully deleted!", HttpStatus.OK);
+    }
+
 }
