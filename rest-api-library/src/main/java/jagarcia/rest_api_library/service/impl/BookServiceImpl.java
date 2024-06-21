@@ -9,7 +9,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -39,5 +41,12 @@ public class BookServiceImpl implements IBookService {
         Book book = optionalBook.get();
 
         return modelMapper.map(book, BookDto.class);
+    }
+
+    @Override
+    public List<BookDto> getAllBooks() {
+        List<Book> books = iBookRepository.findAll();
+
+        return books.stream().map((book) -> modelMapper.map(book, BookDto.class)).collect(Collectors.toList());
     }
 }

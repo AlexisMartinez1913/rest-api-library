@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @AllArgsConstructor
 @RequestMapping("api/books")
@@ -26,6 +28,14 @@ public class BookController {
     public ResponseEntity<BookDto> getUserById(@PathVariable("id") Long bookId) {
         BookDto bookDto = iBookService.getBookById(bookId);
         return new ResponseEntity<>(bookDto, HttpStatus.OK);
+    }
+
+    //build get all books
+    //http://localhost:8080/api/books
+    @GetMapping
+    public ResponseEntity<List<BookDto>> getAllBooks() {
+        List<BookDto> booksDto = iBookService.getAllBooks();
+        return new ResponseEntity<>(booksDto, HttpStatus.OK);
     }
 
 }
