@@ -9,6 +9,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @AllArgsConstructor
 public class BookServiceImpl implements IBookService {
@@ -29,5 +31,13 @@ public class BookServiceImpl implements IBookService {
         //convert Book JPA entity to BookDto using modelMaper
         BookDto savedBookDto = modelMapper.map(savedBook, BookDto.class);
         return savedBookDto;
+    }
+
+    @Override
+    public BookDto getBookById(Long bookId) {
+        Optional<Book> optionalBook = iBookRepository.findById(bookId);
+        Book book = optionalBook.get();
+
+        return modelMapper.map(book, BookDto.class);
     }
 }
