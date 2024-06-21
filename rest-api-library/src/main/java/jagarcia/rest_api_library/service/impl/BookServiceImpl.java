@@ -2,6 +2,7 @@ package jagarcia.rest_api_library.service.impl;
 
 import jagarcia.rest_api_library.dto.BookDto;
 import jagarcia.rest_api_library.entity.Book;
+import jagarcia.rest_api_library.exception.ResourceNotFoundException;
 import jagarcia.rest_api_library.repository.IBookRepository;
 import jagarcia.rest_api_library.service.IBookService;
 import lombok.AllArgsConstructor;
@@ -37,8 +38,12 @@ public class BookServiceImpl implements IBookService {
 
     @Override
     public BookDto getBookById(Long bookId) {
-        Optional<Book> optionalBook = iBookRepository.findById(bookId);
-        Book book = optionalBook.get();
+        //Optional<Book> optionalBook = iBookRepository.findById(bookId);
+        //Book book = optionalBook.get();
+        //EXCEPCION
+        Book book = iBookRepository.findById(bookId).orElseThrow(
+                () -> new ResourceNotFoundException("Book", "id", bookId)
+        );
 
         return modelMapper.map(book, BookDto.class);
     }
@@ -52,7 +57,10 @@ public class BookServiceImpl implements IBookService {
 
     @Override
     public BookDto updateBook(BookDto bookDto) {
-        Book existingBook = iBookRepository.findById(bookDto.getId()).get();
+        //excepcion personalizada
+        Book existingBook = iBookRepository.findById(bookDto.getId()).orElseThrow(
+                () -> new ResourceNotFoundException("Book", "Id", bookDto.getId())
+        );
         existingBook.setTitle(bookDto.getTitle());
         existingBook.setAuthor(bookDto.getAuthor());
         existingBook.setCategory(bookDto.getCategory());
@@ -67,6 +75,10 @@ public class BookServiceImpl implements IBookService {
 
     @Override
     public void deleteBook(Long bookId) {
+        Book existingBook = iBookRepository.findById(bookId).orElseThrow(
+                () -> new ResourceNotFoundException("Book", "Id", bookId)
+        );
+
         iBookRepository.deleteById(bookId);
     }
 }
