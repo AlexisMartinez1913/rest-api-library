@@ -2,6 +2,7 @@ package jagarcia.rest_api_library.controller;
 
 import jagarcia.rest_api_library.dto.BookDto;
 import jagarcia.rest_api_library.service.IBookService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,7 @@ public class BookController {
 
     //build create book REST API
     @PostMapping
-    public ResponseEntity<BookDto> createBook(@RequestBody BookDto bookDto) {
+    public ResponseEntity<BookDto> createBook(@Valid @RequestBody BookDto bookDto) {
         BookDto savedBook = iBookService.createBook(bookDto);
         return new ResponseEntity<>(savedBook, HttpStatus.CREATED);
     }
@@ -40,14 +41,15 @@ public class BookController {
 
     //build update book
     @PutMapping("{id}")
-    public ResponseEntity<BookDto> updateBook(@PathVariable("id") Long bookId, @RequestBody BookDto bookDto) {
+    public ResponseEntity<BookDto> updateBook(@PathVariable("id") Long bookId,
+                                              @RequestBody @Valid BookDto bookDto) {
         bookDto.setId(bookId);
         BookDto updatedBook = iBookService.updateBook(bookDto);
         return new ResponseEntity<>(updatedBook, HttpStatus.OK);
     }
 
     //build Delete BOOK
-    @DeleteMapping
+    @DeleteMapping("{id}")
     public ResponseEntity<String> deleteBook(@PathVariable("id") Long bookId) {
         iBookService.deleteBook(bookId);
         return new ResponseEntity<>("Book succesfully deleted!", HttpStatus.OK);
